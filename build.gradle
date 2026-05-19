@@ -50,6 +50,7 @@ tasks.named('test') {
 tasks.named("bootJar") {
     enabled = true
     archiveFileName = "app.jar"
+    mainClass = "org.swe304.SchoolManagementApplication"
 }
 
 tasks.named("jar") {
