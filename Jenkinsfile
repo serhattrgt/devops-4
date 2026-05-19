@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven'
+    }
+
     environment {
         IMAGE_NAME = "serhat0/school-management"
         IMAGE_TAG = "latest"
