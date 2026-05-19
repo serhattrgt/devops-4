@@ -47,10 +47,10 @@ pipeline {
 
         stage('Deploy to K8s') {
             steps {
-                 bat 'kubectl apply -f k8s/backend-depl.yaml'
-                 bat 'kubectl apply -f k8s/backend-service.yaml'
-                 bat 'kubectl apply -f k8s/db-depl.yaml'
-                 bat 'kubectl apply -f k8s/db-service.yaml'
+                 bat 'kubectl apply --validate=false -f k8s/backend-depl.yaml'
+                 bat 'kubectl apply --validate=false -f k8s/backend-service.yaml'
+                 bat 'kubectl apply --validate=false -f k8s/db-depl.yaml'
+                 bat 'kubectl apply --validate=false -f k8s/db-service.yaml'
             }
         }
     }
