@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven'
-    }
-
     environment {
         IMAGE_NAME = "serhat0/school-management"
         IMAGE_TAG = "latest"
@@ -21,7 +17,7 @@ pipeline {
 
         stage('Build JAR') {
             steps {
-                bat 'mvn clean package -DskipTests'
+                bat 'gradlew.bat clean build -x test'
             }
         }
 
