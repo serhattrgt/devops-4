@@ -47,8 +47,10 @@ pipeline {
 
         stage('Deploy to K8s') {
             steps {
-                bat 'kubectl apply -f k8s/deployment.yaml'
-                bat 'kubectl apply -f k8s/service.yaml'
+                 bat 'kubectl apply -f k8s/backend-depl.yaml'
+                 bat 'kubectl apply -f k8s/backend-service.yaml'
+                 bat 'kubectl apply -f k8s/db-depl.yaml'
+                 bat 'kubectl apply -f k8s/db-service.yaml'
             }
         }
     }
