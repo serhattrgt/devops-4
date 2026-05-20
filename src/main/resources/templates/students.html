@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="tr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ogrenciler | School Management</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div th:replace="~{fragments/layout :: navbar(${activePage})}"></div>
+
+<main class="page">
+    <section class="page-heading compact">
+        <p class="eyebrow">Students</p>
+        <h1>Ogrenciler</h1>
+    </section>
+
+    <div class="flash success" th:if="${successMessage}" th:text="${successMessage}"></div>
+    <div class="flash error" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+
+    <section class="workspace-grid">
+        <form class="form-panel"
+              method="post"
+              th:action="${editing} ? @{/students/{id}(id=${editingId})} : @{/students}"
+              th:object="${studentForm}">
+            <h2 th:text="${editing} ? 'Ogrenci Duzenle' : 'Yeni Ogrenci'">Yeni Ogrenci</h2>
+
+            <div class="form-alert" th:if="${#fields.hasGlobalErrors()}">
+                <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+            </div>
+
+            <label>
+                <span>Ad</span>
+                <input type="text" th:field="*{firstName}" placeholder="Ad">
+                <small class="field-error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></small>
+            </label>
+
+            <label>
+                <span>Soyad</span>
+                <input type="text" th:field="*{lastName}" placeholder="Soyad">
+                <small class="field-error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></small>
+            </label>
+
+            <label>
+                <span>E-posta</span>
+                <input type="email" th:field="*{email}" placeholder="email@example.com">
+                <small class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+            </label>
+
+            <div class="button-row">
+                <button class="primary-btn" type="submit" th:text="${editing} ? 'Guncelle' : 'Kaydet'">Kaydet</button>
+                <a class="secondary-btn" th:if="${editing}" th:href="@{/students}">Vazgec</a>
+            </div>
+        </form>
+
+        <section class="table-panel">
+            <div class="table-header">
+                <h2>Ogrenci Listesi</h2>
+                <span th:text="${#lists.size(students)} + ' kayit'">0 kayit</span>
+            </div>
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ad</th>
+                        <th>Soyad</th>
+                        <th>E-posta</th>
+                        <th>Islem</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${#lists.isEmpty(students)}">
+                        <td colspan="5" class="empty-cell">Kayit bulunamadi.</td>
+                    </tr>
+                    <tr th:each="student : ${students}">
+                        <td th:text="${student.id}">1</td>
+                        <td th:text="${student.firstName}">Ada</td>
+                        <td th:text="${student.lastName}">Lovelace</td>
+                        <td th:text="${student.email}">ada@example.com</td>
+                        <td class="actions-cell">
+                            <a class="table-link" th:href="@{/students/edit/{id}(id=${student.id})}">Duzenle</a>
+                            <form method="post" th:action="@{/students/{id}/delete(id=${student.id})}">
+                                <button class="danger-btn" type="submit">Sil</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </section>
+</main>
+</body>
+</html>
