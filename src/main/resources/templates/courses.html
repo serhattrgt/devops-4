@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="tr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dersler | School Management</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div th:replace="~{fragments/layout :: navbar(${activePage})}"></div>
+
+<main class="page">
+    <section class="page-heading compact">
+        <p class="eyebrow">Courses</p>
+        <h1>Dersler</h1>
+    </section>
+
+    <div class="flash success" th:if="${successMessage}" th:text="${successMessage}"></div>
+    <div class="flash error" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+
+    <section class="workspace-grid">
+        <form class="form-panel"
+              method="post"
+              th:action="${editing} ? @{/courses/{id}(id=${editingId})} : @{/courses}"
+              th:object="${courseForm}">
+            <h2 th:text="${editing} ? 'Ders Duzenle' : 'Yeni Ders'">Yeni Ders</h2>
+
+            <div class="form-alert" th:if="${#fields.hasGlobalErrors()}">
+                <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+            </div>
+
+            <label>
+                <span>Ders Adi</span>
+                <input type="text" th:field="*{courseName}" placeholder="Ders adi">
+                <small class="field-error" th:if="${#fields.hasErrors('courseName')}" th:errors="*{courseName}"></small>
+            </label>
+
+            <label>
+                <span>Ders Kodu</span>
+                <input type="text" th:field="*{courseCode}" placeholder="CSE101">
+                <small class="field-error" th:if="${#fields.hasErrors('courseCode')}" th:errors="*{courseCode}"></small>
+            </label>
+
+            <label>
+                <span>Kredi</span>
+                <input type="number" min="1" th:field="*{credit}" placeholder="3">
+                <small class="field-error" th:if="${#fields.hasErrors('credit')}" th:errors="*{credit}"></small>
+            </label>
+
+            <div class="button-row">
+                <button class="primary-btn" type="submit" th:text="${editing} ? 'Guncelle' : 'Kaydet'">Kaydet</button>
+                <a class="secondary-btn" th:if="${editing}" th:href="@{/courses}">Vazgec</a>
+            </div>
+        </form>
+
+        <section class="table-panel">
+            <div class="table-header">
+                <h2>Ders Listesi</h2>
+                <span th:text="${#lists.size(courses)} + ' kayit'">0 kayit</span>
+            </div>
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ders Adi</th>
+                        <th>Ders Kodu</th>
+                        <th>Kredi</th>
+                        <th>Islem</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${#lists.isEmpty(courses)}">
+                        <td colspan="5" class="empty-cell">Kayit bulunamadi.</td>
+                    </tr>
+                    <tr th:each="course : ${courses}">
+                        <td th:text="${course.id}">1</td>
+                        <td th:text="${course.courseName}">Course</td>
+                        <td th:text="${course.courseCode}">CSE101</td>
+                        <td th:text="${course.credit}">3</td>
+                        <td class="actions-cell">
+                            <a class="table-link" th:href="@{/courses/edit/{id}(id=${course.id})}">Duzenle</a>
+                            <form method="post" th:action="@{/courses/{id}/delete(id=${course.id})}">
+                                <button class="danger-btn" type="submit">Sil</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </section>
+</main>
+</body>
+</html>
