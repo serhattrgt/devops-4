@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    triggers {
+        cron('H/2 * * * *')
+    }
+
     environment {
         IMAGE_NAME = "serhat0/school-management"
         IMAGE_TAG = "latest"
@@ -47,12 +51,12 @@ pipeline {
 
         stage('Deploy to K8s') {
             steps {
-            withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]){
-                 bat 'kubectl apply --validate=false -f k8s/backend-depl.yaml'
-                 bat 'kubectl apply --validate=false -f k8s/backend-service.yaml'
-                 bat 'kubectl apply --validate=false -f k8s/db-depl.yaml'
-                 bat 'kubectl apply --validate=false -f k8s/db-service.yaml'
-                 }
+                withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                    bat 'kubectl apply --validate=false -f k8s/backend-depl.yaml'
+                    bat 'kubectl apply --validate=false -f k8s/backend-service.yaml'
+                    bat 'kubectl apply --validate=false -f k8s/db-depl.yaml'
+                    bat 'kubectl apply --validate=false -f k8s/db-service.yaml'
+                }
             }
         }
     }
