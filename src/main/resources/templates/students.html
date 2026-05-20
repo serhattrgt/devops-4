@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="tr" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ogrenciler | School Management</title>
+    <title>Students | School Management</title>
     <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 <body>
@@ -12,7 +12,7 @@
 <main class="page">
     <section class="page-heading compact">
         <p class="eyebrow">Students</p>
-        <h1>Ogrenciler</h1>
+        <h1>Students</h1>
     </section>
 
     <div class="flash success" th:if="${successMessage}" th:text="${successMessage}"></div>
@@ -21,57 +21,57 @@
     <section class="workspace-grid">
         <form class="form-panel"
               method="post"
-              th:action="${editing} ? @{/students/{id}(id=${editingId})} : @{/students}"
+              th:action="${editing} ? '/students/' + ${editingId} : '/students'"
               th:object="${studentForm}">
-            <h2 th:text="${editing} ? 'Ogrenci Duzenle' : 'Yeni Ogrenci'">Yeni Ogrenci</h2>
+            <h2 th:text="${editing} ? 'Edit Student' : 'New Student'">New Student</h2>
 
             <div class="form-alert" th:if="${#fields.hasGlobalErrors()}">
                 <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
             </div>
 
             <label>
-                <span>Ad</span>
-                <input type="text" th:field="*{firstName}" placeholder="Ad">
+                <span>First Name</span>
+                <input type="text" th:field="*{firstName}" placeholder="First name">
                 <small class="field-error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></small>
             </label>
 
             <label>
-                <span>Soyad</span>
-                <input type="text" th:field="*{lastName}" placeholder="Soyad">
+                <span>Last Name</span>
+                <input type="text" th:field="*{lastName}" placeholder="Last name">
                 <small class="field-error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></small>
             </label>
 
             <label>
-                <span>E-posta</span>
+                <span>Email</span>
                 <input type="email" th:field="*{email}" placeholder="email@example.com">
                 <small class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
             </label>
 
             <div class="button-row">
-                <button class="primary-btn" type="submit" th:text="${editing} ? 'Guncelle' : 'Kaydet'">Kaydet</button>
-                <a class="secondary-btn" th:if="${editing}" th:href="@{/students}">Vazgec</a>
+                <button class="primary-btn" type="submit" th:text="${editing} ? 'Update' : 'Save'">Save</button>
+                <a class="secondary-btn" th:if="${editing}" th:href="@{/students}">Cancel</a>
             </div>
         </form>
 
         <section class="table-panel">
             <div class="table-header">
-                <h2>Ogrenci Listesi</h2>
-                <span th:text="${#lists.size(students)} + ' kayit'">0 kayit</span>
+                <h2>Student List</h2>
+                <span th:text="${#lists.size(students)} + ' records'">0 records</span>
             </div>
             <div class="table-scroll">
                 <table>
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Ad</th>
-                        <th>Soyad</th>
-                        <th>E-posta</th>
-                        <th>Islem</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:if="${#lists.isEmpty(students)}">
-                        <td colspan="5" class="empty-cell">Kayit bulunamadi.</td>
+                        <td colspan="5" class="empty-cell">No records found.</td>
                     </tr>
                     <tr th:each="student : ${students}">
                         <td th:text="${student.id}">1</td>
@@ -79,9 +79,9 @@
                         <td th:text="${student.lastName}">Lovelace</td>
                         <td th:text="${student.email}">ada@example.com</td>
                         <td class="actions-cell">
-                            <a class="table-link" th:href="@{/students/edit/{id}(id=${student.id})}">Duzenle</a>
+                            <a class="table-link" th:href="@{/students/edit/{id}(id=${student.id})}">Edit</a>
                             <form method="post" th:action="@{/students/{id}/delete(id=${student.id})}">
-                                <button class="danger-btn" type="submit">Sil</button>
+                                <button class="danger-btn" type="submit">Delete</button>
                             </form>
                         </td>
                     </tr>

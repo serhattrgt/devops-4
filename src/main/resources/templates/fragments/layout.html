@@ -5,10 +5,10 @@
     <nav class="navbar">
         <a class="brand" th:href="@{/}">School Management</a>
         <div class="nav-links">
-            <a class="nav-link" th:classappend="${activePage == 'home'} ? ' active' : ''" th:href="@{/}">Ana Sayfa</a>
-            <a class="nav-link" th:classappend="${activePage == 'students'} ? ' active' : ''" th:href="@{/students}">Ogrenciler</a>
-            <a class="nav-link" th:classappend="${activePage == 'courses'} ? ' active' : ''" th:href="@{/courses}">Dersler</a>
-            <a class="nav-link" th:classappend="${activePage == 'enrollments'} ? ' active' : ''" th:href="@{/enrollments}">Kayitlar</a>
+            <a class="nav-link" th:classappend="${activePage == 'home'} ? ' active' : ''" th:href="@{/}">Main Page</a>
+            <a class="nav-link" th:classappend="${activePage == 'students'} ? ' active' : ''" th:href="@{/students}">Students</a>
+            <a class="nav-link" th:classappend="${activePage == 'courses'} ? ' active' : ''" th:href="@{/courses}">Courses</a>
+            <a class="nav-link" th:classappend="${activePage == 'enrollments'} ? ' active' : ''" th:href="@{/enrollments}">Enrollments</a>
             <a class="nav-link" th:href="@{/swagger-ui/index.html}">Swagger</a>
         </div>
     </nav>

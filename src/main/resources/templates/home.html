@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="tr" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ana Sayfa | School Management</title>
+    <title>Home | School Management</title>
     <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 <body>
@@ -12,36 +12,36 @@
 <main class="page">
     <section class="page-heading">
         <p class="eyebrow">MVC Panel</p>
-        <h1>Ana Sayfa</h1>
+        <h1>Home</h1>
     </section>
 
     <section class="stats-grid">
         <a class="stat-card" th:href="@{/students}">
             <span class="stat-value" th:text="${studentCount}">0</span>
-            <span class="stat-label">Ogrenci</span>
+            <span class="stat-label">Students</span>
         </a>
         <a class="stat-card" th:href="@{/courses}">
             <span class="stat-value" th:text="${courseCount}">0</span>
-            <span class="stat-label">Ders</span>
+            <span class="stat-label">Courses</span>
         </a>
         <a class="stat-card" th:href="@{/enrollments}">
             <span class="stat-value" th:text="${enrollmentCount}">0</span>
-            <span class="stat-label">Kayit</span>
+            <span class="stat-label">Enrollments</span>
         </a>
     </section>
 
     <section class="quick-actions">
         <a class="action-row" th:href="@{/students}">
-            <span>Ogrenci islemleri</span>
-            <strong th:text="${studentCount} + ' aktif kayit'">0 aktif kayit</strong>
+            <span>Student Management</span>
+            <strong th:text="${studentCount} + ' active records'">0 active records</strong>
         </a>
         <a class="action-row" th:href="@{/courses}">
-            <span>Ders islemleri</span>
-            <strong th:text="${courseCount} + ' aktif kayit'">0 aktif kayit</strong>
+            <span>Course Management</span>
+            <strong th:text="${courseCount} + ' active records'">0 active records</strong>
         </a>
         <a class="action-row" th:href="@{/enrollments}">
-            <span>Kayit islemleri</span>
-            <strong th:text="${enrollmentCount} + ' aktif kayit'">0 aktif kayit</strong>
+            <span>Enrollment Management</span>
+            <strong th:text="${enrollmentCount} + ' active records'">0 active records</strong>
         </a>
     </section>
 </main>

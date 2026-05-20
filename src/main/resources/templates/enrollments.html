@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="tr" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kayitlar | School Management</title>
+    <title>Enrollments | School Management</title>
     <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 <body>
@@ -12,7 +12,7 @@
 <main class="page">
     <section class="page-heading compact">
         <p class="eyebrow">Enrollments</p>
-        <h1>Kayitlar</h1>
+        <h1>Enrollments</h1>
     </section>
 
     <div class="flash success" th:if="${successMessage}" th:text="${successMessage}"></div>
@@ -20,16 +20,16 @@
 
     <section class="workspace-grid">
         <form class="form-panel" method="post" th:action="@{/enrollments}" th:object="${enrollmentForm}">
-            <h2>Yeni Kayit</h2>
+            <h2>New Enrollment</h2>
 
             <div class="form-alert" th:if="${#fields.hasGlobalErrors()}">
                 <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
             </div>
 
             <label>
-                <span>Ogrenci</span>
+                <span>Student</span>
                 <select th:field="*{studentId}">
-                    <option value="">Ogrenci sec</option>
+                    <option value="">Select a student</option>
                     <option th:each="student : ${students}"
                             th:value="${student.id}"
                             th:text="${student.firstName + ' ' + student.lastName + ' (#' + student.id + ')'}">
@@ -39,9 +39,9 @@
             </label>
 
             <label>
-                <span>Ders</span>
+                <span>Course</span>
                 <select th:field="*{courseId}">
-                    <option value="">Ders sec</option>
+                    <option value="">Select a course</option>
                     <option th:each="course : ${courses}"
                             th:value="${course.id}"
                             th:text="${course.courseCode + ' - ' + course.courseName}">
@@ -53,28 +53,28 @@
             <div class="button-row">
                 <button class="primary-btn"
                         type="submit"
-                        th:disabled="${#lists.isEmpty(students) or #lists.isEmpty(courses)}">Kaydet</button>
+                        th:disabled="${#lists.isEmpty(students) or #lists.isEmpty(courses)}">Save</button>
             </div>
         </form>
 
         <section class="table-panel">
             <div class="table-header">
-                <h2>Kayit Listesi</h2>
-                <span th:text="${#lists.size(enrollments)} + ' kayit'">0 kayit</span>
+                <h2>Enrollment List</h2>
+                <span th:text="${#lists.size(enrollments)} + ' records'">0 records</span>
             </div>
             <div class="table-scroll">
                 <table>
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Ogrenci ID</th>
-                        <th>Ders ID</th>
-                        <th>Islem</th>
+                        <th>Student ID</th>
+                        <th>Course ID</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:if="${#lists.isEmpty(enrollments)}">
-                        <td colspan="4" class="empty-cell">Kayit bulunamadi.</td>
+                        <td colspan="4" class="empty-cell">No records found.</td>
                     </tr>
                     <tr th:each="enrollment : ${enrollments}">
                         <td th:text="${enrollment.id}">1</td>
@@ -82,7 +82,7 @@
                         <td th:text="${enrollment.courseId}">1</td>
                         <td class="actions-cell">
                             <form method="post" th:action="@{/enrollments/{id}/delete(id=${enrollment.id})}">
-                                <button class="danger-btn" type="submit">Sil</button>
+                                <button class="danger-btn" type="submit">Delete</button>
                             </form>
                         </td>
                     </tr>
