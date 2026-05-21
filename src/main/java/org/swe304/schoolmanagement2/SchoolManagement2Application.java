@@ -10,4 +10,6 @@ public class SchoolManagement2Application {
         SpringApplication.run(SchoolManagement2Application.class, args);
     }
 
+    //test
+
 }
