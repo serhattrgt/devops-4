@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: spring-boot-app
-          image: serhat0/school-management-2:latest
+          image: serhat0/school-management:latest
           ports:
             - containerPort: 9090
           env:
