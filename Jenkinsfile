@@ -53,10 +53,12 @@ pipeline {
         stage('Deploy to K8s') {
             steps {
                 withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-                    bat 'kubectl rollout restart k8s/db-depl.yaml'
-                    bat 'kubectl arollout restart k8s/db-service.yaml'
-                    bat 'kubectl rollout restart k8s/backend-depl.yaml'
-                    bat 'kubectl rollout restart k8s/backend-service.yaml'
+                    bat 'kubectl apply -f k8s/db-depl.yaml'
+                    bat 'kubectl apply -f k8s/db-service.yaml'
+                    bat 'kubectl apply -f k8s/backend-depl.yaml'
+                    bat 'kubectl apply -f k8s/backend-service.yaml'
+                    bat 'kubectl rollout restart deployment/postgres-deployment'
+                    bat 'kubectl rollout restart deployment/swe-304-deployment'
 
                 }
             }
